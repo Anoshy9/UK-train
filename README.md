@@ -42,13 +42,11 @@ Dans ton repository GitHub (`anoshy9/UK-train`):
    - `TRANSPORT_API_ID` : Ton `app_id` de TransportAPI (commun aux 2)
    - `TRANSPORT_API_KEY` : Ton `app_key` de TransportAPI (commun aux 2)
    
-   **Pour l'ALLER (CRE → EUS - Jeudi) :**
-   - `FROM_STATION` : **`CRE`** (Crewe)
-   - `TO_STATION` : **`EUS`** (London Euston)
-   
-   **Pour le RETOUR (EUS → CRE - Lundi) :**
-   - `RETURN_FROM_STATION` : **`EUS`** (London Euston)
-   - `RETURN_TO_STATION` : **`CRE`** (Crewe)
+   **Pour les 2 workflows :**
+   - `FROM_STATION` : **`CRE`** (Crewe) - utilisé par le workflow Aller (Jeudi)
+   - `TO_STATION` : **`EUS`** (London Euston) - utilisé par le workflow Aller (Jeudi)
+   - `RETURN_FROM_STATION` : **`EUS`** (London Euston) - utilisé par le workflow Retour (Lundi)
+   - `RETURN_TO_STATION` : **`CRE`** (Crewe) - utilisé par le workflow Retour (Lundi)
 
 > ✅ **Déjà configuré** : Les workflows sont **automatiquement filtrés** pour **London Northwest Railway**.
 

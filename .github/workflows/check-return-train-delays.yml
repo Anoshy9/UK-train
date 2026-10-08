@@ -36,4 +36,9 @@ jobs:
           FROM_STATION: ${{ secrets.RETURN_FROM_STATION }}
           TO_STATION: ${{ secrets.RETURN_TO_STATION }}
           OPERATOR_FILTER: "London Northwest Railway"
-        run: python scripts/check_train_delays.py
+          # Override the default station variables for return trip
+          DEPARTURE_TIME: ""
+        run: |
+          export FROM_STATION=${{ secrets.RETURN_FROM_STATION }}
+          export TO_STATION=${{ secrets.RETURN_TO_STATION }}
+          python scripts/check_train_delays.py
