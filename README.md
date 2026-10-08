@@ -31,9 +31,9 @@ Dans ton repository GitHub (`anoshy9/UK-train`):
    - `FROM_STATION` : **`CRE`** (Crewe)
    - `TO_STATION` : **`EUS`** (London Euston)
 
-> ✅ **Déjà configuré** : Le workflow est **automatiquement filtré** pour **London Northwest Railway** et ne s'exécute **que les jeudis** à 7h, 8h, 9h, 12h, 16h et 18h.
+> ✅ **Déjà configuré** : Le workflow est **automatiquement filtré** pour **London Northwest Railway** et ne s'exécute **que les jeudis entre 15h00 et 19h30** (toutes les 30 minutes).
 
-> ⚠️ **Note** : Avec 6 exécutions/jour (uniquement le jeudi), tu utilises **6 requêtes API/jour** (bien en dessous de la limite de 30).
+> ⚠️ **Note** : Avec 10 exécutions/jour (uniquement le jeudi), tu utilises **10 requêtes API/jour** (bien en dessous de la limite de 30).
 
 ### 3. Codes des gares principales
 

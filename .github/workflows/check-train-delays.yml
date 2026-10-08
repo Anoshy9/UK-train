@@ -2,13 +2,17 @@ name: Check UK Train Delays (CRE-EUS - London Northwest Railway - Jeudis)
 
 on:
   schedule:
-    # Vérifie les jeudis à 7h, 8h, 9h, 12h, 16h, 18h (6 requêtes/jour - compatible avec le plan gratuit)
-    - cron: '0 7 * * 4'
-    - cron: '0 8 * * 4'
-    - cron: '0 9 * * 4'
-    - cron: '0 12 * * 4'
+    # Vérifie les jeudis entre 15h00 et 19h30 (toutes les 30 min - 10 requêtes/jour)
+    - cron: '0 15 * * 4'
+    - cron: '30 15 * * 4'
     - cron: '0 16 * * 4'
+    - cron: '30 16 * * 4'
+    - cron: '0 17 * * 4'
+    - cron: '30 17 * * 4'
     - cron: '0 18 * * 4'
+    - cron: '30 18 * * 4'
+    - cron: '0 19 * * 4'
+    - cron: '30 19 * * 4'
   workflow_dispatch:
     # Permet de lancer manuellement
 
