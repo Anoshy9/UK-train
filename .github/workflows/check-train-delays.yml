@@ -52,9 +52,16 @@ jobs:
           fi
 
       - name: Send Discord Notification
-        if: always()
-        uses: Ilshidur/action-discord@0.6.4
-        with:
-          args: "🚄 **UK Train Alert (CRE→EUS - Jeudi)**\n\n${{ steps.read-status.outputs.status }}"
+        if: always() && env.DISCORD_WEBHOOK != ''
+        run: |
+          STATUS="${{ steps.read-status.outputs.status }}"
+          MESSAGE="🚄 **UK Train Alert (CRE→EUS - Jeudi)**\n\n${STATUS}"
+          if [ -n "$DISCORD_WEBHOOK" ]; then
+            curl -X POST -H "Content-Type: application/json" \
+              -d "{\"content\":\"${MESSAGE}\"}" \
+              "$DISCORD_WEBHOOK"
+          else
+            echo "DISCORD_WEBHOOK not set, skipping notification"
+          fi
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
