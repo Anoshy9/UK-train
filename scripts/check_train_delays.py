@@ -96,13 +96,14 @@ def get_train_departures(from_station: str, to_station: str, app_id: str, app_ke
         return None
 
 
-def find_next_train(departures: List[Dict[str, Any]], target_time: Optional[str] = None) -> Optional[Dict[str, Any]]:
+def find_next_train(departures: List[Dict[str, Any]], target_time: Optional[str] = None, operator_filter: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """
-    Find the next departing train
+    Find the next departing train, optionally filtered by operator
     
     Args:
         departures: List of departure data
         target_time: Optional target departure time (HH:MM format)
+        operator_filter: Optional operator name to filter by (e.g., "London Northwest Railway")
     
     Returns:
         Next train info or None
@@ -128,6 +129,12 @@ def find_next_train(departures: List[Dict[str, Any]], target_time: Optional[str]
     for train in departures:
         if 'aimed_departure_time' not in train:
             continue
+        
+        # Filter by operator if specified
+        if operator_filter:
+            operator_name = train.get('operator_name', '')
+            if operator_filter.lower() not in operator_name.lower():
+                continue
         
         dep_time_str = train['aimed_departure_time']
         try:
@@ -207,11 +214,14 @@ def main():
     
     try:
         app_id, app_key = get_api_credentials()
-        from_station = os.getenv('FROM_STATION', 'VIC')
-        to_station = os.getenv('TO_STATION', 'KGX')
+        from_station = os.getenv('FROM_STATION', 'CRE')
+        to_station = os.getenv('TO_STATION', 'EUS')
         target_time = os.getenv('DEPARTURE_TIME')  # Optional
+        operator_filter = os.getenv('OPERATOR_FILTER')  # Optional
         
         print(f"Checking trains from {from_station} to {to_station}")
+        if operator_filter:
+            print(f"Filtering by operator: {operator_filter}")
         
         # Get departures
         departures = get_train_departures(from_station, to_station, app_id, app_key)
@@ -225,7 +235,7 @@ def main():
             return
         
         # Find next train
-        next_train = find_next_train(departures, target_time)
+        next_train = find_next_train(departures, target_time, operator_filter)
         
         if next_train:
             message = format_delay_message(next_train)

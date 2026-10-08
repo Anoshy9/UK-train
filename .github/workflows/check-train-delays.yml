@@ -1,9 +1,14 @@
-name: Check UK Train Delays
+name: Check UK Train Delays (CRE-EUS - London Northwest Railway - Jeudis)
 
 on:
   schedule:
-    # Vérifie toutes les 15 minutes (30 requêtes/jour max avec le plan gratuit)
-    - cron: '*/15 * * * *'
+    # Vérifie les jeudis à 7h, 8h, 9h, 12h, 16h, 18h (6 requêtes/jour - compatible avec le plan gratuit)
+    - cron: '0 7 * * 4'
+    - cron: '0 8 * * 4'
+    - cron: '0 9 * * 4'
+    - cron: '0 12 * * 4'
+    - cron: '0 16 * * 4'
+    - cron: '0 18 * * 4'
   workflow_dispatch:
     # Permet de lancer manuellement
 
@@ -29,4 +34,5 @@ jobs:
           TRANSPORT_API_KEY: ${{ secrets.TRANSPORT_API_KEY }}
           FROM_STATION: ${{ secrets.FROM_STATION }}
           TO_STATION: ${{ secrets.TO_STATION }}
+          OPERATOR_FILTER: "London Northwest Railway"
         run: python scripts/check_train_delays.py

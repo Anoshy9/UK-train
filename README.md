@@ -9,9 +9,9 @@ Un projet pour suivre les horaires des trains au Royaume-Uni et détecter les re
 - ✅ Historique des retards
 - ✅ **Utilise TransportAPI (gratuit - 30 requêtes/jour)**
 
-## 🚀 Configuration
+## 🚀 Configuration pour CRE → EUS (London Northwest Railway - Jeudis)
 
-### 1. Obtenir une clé API (GRATUITE)
+### 1️⃣ Obtenir une clé API (GRATUITE)
 
 1. **Va sur [TransportAPI Developer Portal](https://developer.transportapi.com/)**
 2. **Insris-toi** avec ton email
@@ -20,19 +20,20 @@ Un projet pour suivre les horaires des trains au Royaume-Uni et détecter les re
    - Le plan gratuit donne **30 requêtes par jour** (suffisant pour un usage personnel)
    - Pas de carte bancaire requise
 
-### 2. Configurer les secrets GitHub
+### 2️⃣ Configurer les secrets GitHub
 
 Dans ton repository GitHub (`anoshy9/UK-train`):
 
 1. Va dans **Settings > Secrets > Actions**
-2. Ajoute ces secrets:
+2. Ajoute ces **4 secrets** :
    - `TRANSPORT_API_ID` : Ton `app_id` de TransportAPI
    - `TRANSPORT_API_KEY` : Ton `app_key` de TransportAPI
-   - `FROM_STATION` : Code de la gare de départ (ex: `VIC` pour Victoria)
-   - `TO_STATION` : Code de la gare d'arrivée (ex: `KGX` pour King's Cross)
-   - `DEPARTURE_TIME` : Heure de départ (format HH:MM, ex: `08:00`) - **Optionnel**
+   - `FROM_STATION` : **`CRE`** (Crewe)
+   - `TO_STATION` : **`EUS`** (London Euston)
 
-> ⚠️ **Note** : Avec le plan gratuit (30 requêtes/jour), le workflow s'exécutera **2 fois par jour max** (toutes les 12h). Pour plus de fréquence, passe à un plan payant ou utilise une alternative comme [Realtime Trains Scraper](#alternatives).
+> ✅ **Déjà configuré** : Le workflow est **automatiquement filtré** pour **London Northwest Railway** et ne s'exécute **que les jeudis** à 7h, 8h, 9h, 12h, 16h et 18h.
+
+> ⚠️ **Note** : Avec 6 exécutions/jour (uniquement le jeudi), tu utilises **6 requêtes API/jour** (bien en dessous de la limite de 30).
 
 ### 3. Codes des gares principales
 
