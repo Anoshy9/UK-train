@@ -33,6 +33,7 @@ jobs:
           pip install requests python-dotenv
 
       - name: Run train delay check
+        id: check-delays
         env:
           TRANSPORT_API_ID: ${{ secrets.TRANSPORT_API_ID }}
           TRANSPORT_API_KEY: ${{ secrets.TRANSPORT_API_KEY }}
@@ -40,3 +41,20 @@ jobs:
           TO_STATION: ${{ secrets.TO_STATION }}
           OPERATOR_FILTER: "London Northwest Railway"
         run: python scripts/check_train_delays.py
+
+      - name: Read train status
+        id: read-status
+        run: |
+          if [ -f train_status.txt ]; then
+            echo "status=$(cat train_status.txt)" >> $GITHUB_OUTPUT
+          else
+            echo "status=No train status file found" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Discord Notification
+        if: always()
+        uses: Ilshidur/action-discord@0.6.4
+        with:
+          args: "🚄 **UK Train Alert (CRE→EUS - Jeudi)**\n\n${{ steps.read-status.outputs.status }}"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

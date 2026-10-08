@@ -30,15 +30,32 @@ jobs:
           pip install requests python-dotenv
 
       - name: Run return train delay check
+        id: check-return-delays
         env:
           TRANSPORT_API_ID: ${{ secrets.TRANSPORT_API_ID }}
           TRANSPORT_API_KEY: ${{ secrets.TRANSPORT_API_KEY }}
           FROM_STATION: ${{ secrets.RETURN_FROM_STATION }}
           TO_STATION: ${{ secrets.RETURN_TO_STATION }}
           OPERATOR_FILTER: "London Northwest Railway"
-          # Override the default station variables for return trip
           DEPARTURE_TIME: ""
         run: |
           export FROM_STATION=${{ secrets.RETURN_FROM_STATION }}
           export TO_STATION=${{ secrets.RETURN_TO_STATION }}
           python scripts/check_train_delays.py
+
+      - name: Read return train status
+        id: read-return-status
+        run: |
+          if [ -f train_status.txt ]; then
+            echo "status=$(cat train_status.txt)" >> $GITHUB_OUTPUT
+          else
+            echo "status=No train status file found" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Discord Notification (Return)
+        if: always()
+        uses: Ilshidur/action-discord@0.6.4
+        with:
+          args: "🚄 **UK Train Alert (EUS→CRE - Lundi)**\n\n${{ steps.read-return-status.outputs.status }}"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
