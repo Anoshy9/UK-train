@@ -1,0 +1,32 @@
+name: Check UK Train Delays
+
+on:
+  schedule:
+    # Vérifie toutes les 15 minutes (30 requêtes/jour max avec le plan gratuit)
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    # Permet de lancer manuellement
+
+jobs:
+  check-delays:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests python-dotenv
+
+      - name: Run train delay check
+        env:
+          TRANSPORT_API_ID: ${{ secrets.TRANSPORT_API_ID }}
+          TRANSPORT_API_KEY: ${{ secrets.TRANSPORT_API_KEY }}
+          FROM_STATION: ${{ secrets.FROM_STATION }}
+          TO_STATION: ${{ secrets.TO_STATION }}
+        run: python scripts/check_train_delays.py
