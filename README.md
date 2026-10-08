@@ -9,7 +9,18 @@ Un projet pour suivre les horaires des trains au Royaume-Uni et détecter les re
 - ✅ Historique des retards
 - ✅ **Utilise TransportAPI (gratuit - 30 requêtes/jour)**
 
-## 🚀 Configuration pour CRE → EUS (London Northwest Railway - Jeudis)
+## 🚆 **2 Workflows disponibles**
+
+| Workflow | Trajet | Jour | Heures | Requêtes/jour |
+|----------|--------|------|--------|----------------|
+| `check-train-delays.yml` | **CRE → EUS** (Aller) | **Jeudi** | 15h00-19h30 | 10 |
+| `check-return-train-delays.yml` | **EUS → CRE** (Retour) | **Lundi** | 15h30-18h30 | 7 |
+
+**Total : 17 requêtes/semaine** (plan gratuit compatible ✅)
+
+---
+
+## 🚀 Configuration
 
 ### 1️⃣ Obtenir une clé API (GRATUITE)
 
@@ -25,15 +36,26 @@ Un projet pour suivre les horaires des trains au Royaume-Uni et détecter les re
 Dans ton repository GitHub (`anoshy9/UK-train`):
 
 1. Va dans **Settings > Secrets > Actions**
-2. Ajoute ces **4 secrets** :
-   - `TRANSPORT_API_ID` : Ton `app_id` de TransportAPI
-   - `TRANSPORT_API_KEY` : Ton `app_key` de TransportAPI
+2. Ajoute ces **6 secrets** :
+   
+   **Pour les 2 workflows (Aller + Retour) :**
+   - `TRANSPORT_API_ID` : Ton `app_id` de TransportAPI (commun aux 2)
+   - `TRANSPORT_API_KEY` : Ton `app_key` de TransportAPI (commun aux 2)
+   
+   **Pour l'ALLER (CRE → EUS - Jeudi) :**
    - `FROM_STATION` : **`CRE`** (Crewe)
    - `TO_STATION` : **`EUS`** (London Euston)
+   
+   **Pour le RETOUR (EUS → CRE - Lundi) :**
+   - `RETURN_FROM_STATION` : **`EUS`** (London Euston)
+   - `RETURN_TO_STATION` : **`CRE`** (Crewe)
 
-> ✅ **Déjà configuré** : Le workflow est **automatiquement filtré** pour **London Northwest Railway** et ne s'exécute **que les jeudis entre 15h00 et 19h30** (toutes les 30 minutes).
+> ✅ **Déjà configuré** : Les workflows sont **automatiquement filtrés** pour **London Northwest Railway**.
 
-> ⚠️ **Note** : Avec 10 exécutions/jour (uniquement le jeudi), tu utilises **10 requêtes API/jour** (bien en dessous de la limite de 30).
+> ⚠️ **Note** : 
+> - Aller (Jeudi) : 10 requêtes/jour
+> - Retour (Lundi) : 7 requêtes/jour
+> - **Total : 17 requêtes/semaine** (bien en dessous de la limite de 30/jour).
 
 ### 3. Codes des gares principales
 
