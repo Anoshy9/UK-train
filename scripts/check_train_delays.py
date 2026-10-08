@@ -247,8 +247,11 @@ def main():
             
             # Set output variables for GitHub Actions
             with open(os.environ.get('GITHUB_OUTPUT', 'output.txt'), 'a') as f:
-                f.write(f"message={message.replace('\n', '\\n')}\n")
-                f.write(f"is_delayed={str(next_train.get('is_cancelled', False) or (next_train.get('expected_departure_time') != next_train.get('aimed_departure_time'))).lower()}\n")
+                # Replace newlines for GitHub Actions output
+                safe_message = message.replace('\n', '\\n').replace('\r', '\\r')
+                f.write(f"message={safe_message}\n")
+                is_delayed = str(next_train.get('is_cancelled', False) or (next_train.get('expected_departure_time') != next_train.get('aimed_departure_time'))).lower()
+                f.write(f"is_delayed={is_delayed}\n")
                 
                 # Calculate delay minutes
                 delay = 0
