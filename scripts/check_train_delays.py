@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script to check UK train delays using TransportAPI (Free tier: 30 requests/day)
-Requires: requests, python-dotenv
+Requires: requests
 
 API Documentation: https://developer.transportapi.com/
 """
